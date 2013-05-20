@@ -10,8 +10,8 @@ group :test do
   gem 'ruby-debug',     :platforms => :ruby_18
   gem 'debugger',       :platforms => :ruby_19
 
-  gem 'bundler',        '~> 1.1.0'
-  gem 'ParseTree',                  :require => 'parse_tree'
+  gem 'bundler'
+  gem "parsetree19", "~> 0.3"
   gem 'dm-sweatshop'
   gem 'dm-sqlite-adapter'
 end
