@@ -138,6 +138,7 @@ class SalesforceAdapter
     sql << " WHERE (#{conditions})" unless conditions.empty?
     sql << " ORDER BY #{order(query.order[0])}" unless query.order.nil? or query.order.empty?
     sql << " LIMIT #{query.limit}" if query.limit
+    sql << " OFFSET #{query.offset}" if query.offset
 
     DataMapper.logger.debug sql if DataMapper.logger
 
