@@ -138,7 +138,7 @@ class SalesforceAdapter
     sql << " WHERE (#{conditions})" unless conditions.empty?
     sql << " ORDER BY #{order(query.order[0])}" unless query.order.nil? or query.order.empty?
     sql << " LIMIT #{query.limit}" if query.limit
-    if query.offest
+    if query.offset
       offset = query.offset > 2000 ? 2000 : query.offset
       sql << " OFFSET #{offset}"
     end
