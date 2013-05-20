@@ -138,7 +138,11 @@ class SalesforceAdapter
     sql << " WHERE (#{conditions})" unless conditions.empty?
     sql << " ORDER BY #{order(query.order[0])}" unless query.order.nil? or query.order.empty?
     sql << " LIMIT #{query.limit}" if query.limit
-    sql << " OFFSET #{query.offset}" if query.offset
+    if query.offest
+      offset = query.offset > 2000 ? 2000 : query.offset
+      sql << " OFFSET #{offset}"
+    end
+    
 
     DataMapper.logger.debug sql if DataMapper.logger
 
