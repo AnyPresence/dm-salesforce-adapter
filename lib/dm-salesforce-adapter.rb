@@ -9,9 +9,13 @@ require 'rexml/element'
 
 class SalesforceAdapter < ::DataMapper::Adapters::AbstractAdapter
   Inflector = ::DataMapper::Inflector
-  
-  ::DataMapper::Adapters::SalesforceAdapter = SalesforceAdapter
-  self.send(:const_added, :SalesforceAdapter)
+end
+
+module DataMapper
+  module Adapters    
+    ::DataMapper::Adapters::SalesforceAdapter = SalesforceAdapter
+    self.send(:const_added, :SalesforceAdapter)
+  end  
 end
 
 require 'dm-salesforce-adapter/resource'
@@ -25,7 +29,7 @@ require 'dm-salesforce-adapter/property'
 
 # For convenience (WRT the examples)
 module DataMapper::Salesforce
-    Resource = SalesforceAdapter::Resource
+    Resource = ::DataMapper::Adapters::SalesforceAdapter::Resource
 end
 
 
