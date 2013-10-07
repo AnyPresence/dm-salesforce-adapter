@@ -4,9 +4,9 @@ class SalesforceAdapter
 
     attr_reader :module_name, :driver_name, :wsdl_path, :api_dir
 
-    def initialize(module_name, driver_name, wsdl_path, api_dir)
+    def initialize(module_name, driver_name, wsdl_path, api_dir, options={})
       @module_name, @driver_name, @wsdl_path, @api_dir = module_name, driver_name, File.expand_path(wsdl_path), File.expand_path(api_dir)
-      generate_soap_classes
+      generate_soap_classes(options[:force_regeneration] == true)
       driver
     end
 
@@ -32,14 +32,14 @@ class SalesforceAdapter
     end
 =end
 
-    def generate_soap_classes
+    def generate_soap_classes(force_regeneration=false)
       unless File.file?(wsdl_path)
         raise Errno::ENOENT, "Could not find the WSDL at #{wsdl_path}"
       end
 
       FileUtils.mkdir_p(wsdl_api_dir)
 
-      generate_files unless files_exist?
+      generate_files unless files_exist? and !force_regeneration
 
       $:.push wsdl_api_dir
       require "#{module_name}Driver"

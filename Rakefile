@@ -18,4 +18,7 @@ Spec::Rake::SpecTask.new(:spec) do |t|
   t.rcov_opts += [ '--text-summary', '--sort', 'coverage', '--sort-reverse' ]
 end
 
+load "lib/tasks/generate_soap_classes.rake"
+
+
 task :default => 'spec'
