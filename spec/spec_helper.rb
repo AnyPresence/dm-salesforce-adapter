@@ -45,19 +45,3 @@ raise "require valid configuration" unless
 
 DataMapper.setup(:default, 'sqlite::memory:')
 DataMapper.setup(:salesforce, sfconfig)
-
-require 'yaml'
-
-unless String.method_defined?(:blank?)
-  class String
-    # A string is blank if it's empty or contains whitespaces only:
-    #
-    #     ''.blank?                 # => true
-    #   '   '.blank?              # => true
-    #   '　'.blank?               # => true
-    #   ' something here '.blank? # => false
-    def blank?
-      self !~ /[^[:space:]]/
-    end
-  end
-end

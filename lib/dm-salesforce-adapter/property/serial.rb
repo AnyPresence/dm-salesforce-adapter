@@ -6,7 +6,7 @@ module SalesforceAdapter::Property
     length 18
 
     def dump(value)
-      value.to_s[0..17] unless value.blank?
+      value.to_s[0..17] unless (value.nil? and value.strip.empty?)
     end
   end
 end
