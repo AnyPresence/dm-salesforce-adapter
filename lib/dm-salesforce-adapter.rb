@@ -19,6 +19,7 @@ require 'dm-salesforce-adapter/sql'
 require 'dm-salesforce-adapter/version'
 require 'dm-salesforce-adapter/adapter'
 require 'dm-salesforce-adapter/property'
+require 'dm-salesforce-adapter/blank' unless Object.method_defined?(:blank?)
 
 # For convenience (WRT the examples)
 module DataMapper::Salesforce
