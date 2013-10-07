@@ -26,4 +26,5 @@ module DataMapper::Salesforce
 end
 
 ::DataMapper::Adapters::SalesforceAdapter = SalesforceAdapter
-::DataMapper::Adapters.const_added(:SalesforceAdapter)
+::DataMapper::Adapters.send(:const_added, :SalesforceAdapter)
+#::DataMapper::Adapters.const_added(:SalesforceAdapter)
