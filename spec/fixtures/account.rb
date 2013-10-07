@@ -11,7 +11,7 @@ class Account
 
   property :id,                  Serial
   property :name,                String,  :required => true
-  property :active,              Boolean, :field => 'Active_L_C__c'
+  property :active,              Boolean, :field => 'Active__c'
   property :annual_revenue,      Float
   property :number_of_employees, Integer
 

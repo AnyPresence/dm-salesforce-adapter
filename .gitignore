@@ -1,6 +1,7 @@
 config/database.yml
 config/database.rb
 config/*.wsdl
+config/*.wsdl.xml
 .gemrc
 gems/
 coverage/

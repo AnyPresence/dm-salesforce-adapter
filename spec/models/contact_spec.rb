@@ -57,15 +57,15 @@ describe "Creating a Contact" do
 
   describe "when a unique property" do
     before(:each) do
-      Contact.all(:irc_nick => 'c00ldud3').destroy
+      Contact.all(:phone => '877 241 LUNA').destroy
     end
 
     it "is invalid" do
-      contact  = Contact.gen(:irc_nick => 'c00ldud3')
+      contact  = Contact.gen(:phone => '877 241 LUNA')
       contact.should be_valid
 
-      duplicate_irc_nick = Contact.gen(:irc_nick => 'c00ldud3')
-      duplicate_irc_nick.should_not be_valid
+      duplicate_phone = Contact.gen(:phone => '877 241 LUNA')
+      duplicate_phone.should_not be_valid
     end
   end
 
@@ -100,21 +100,21 @@ describe "Updating a Contact" do
 
   describe "when a unique property" do
     before(:each) do
-      Contact.all(:irc_nick.like => 'c00ldud%').destroy
+      Contact.all(:phone.like => '877 241%').destroy
     end
     it "is invalid" do
       #pending "test duplicates on update elsewhere"
-      contact = Contact.gen(:irc_nick => 'c00ldud3')
+      contact = Contact.gen(:phone => '877 241 LUNA')
       contact.should be_valid
 
-      conflicting_contact_after_update = Contact.gen(:irc_nick => 'c00ldud4')
+      conflicting_contact_after_update = Contact.gen(:phone => '877 241 LUNB')
       conflicting_contact_after_update.should be_valid
 
       lambda do
-        contact.update(:irc_nick => 'c00ldud5')
+        contact.update(:phone => '877 241 LUNC')
       end.should_not change { contact.valid? }
       lambda do
-        conflicting_contact_after_update.update(:irc_nick => 'c00ldud5')
+        conflicting_contact_after_update.update(:phone => '877 241 LUNC')
       end.should change { conflicting_contact_after_update.valid? }
     end
   end
@@ -128,35 +128,29 @@ describe "Updating a Contact" do
     end
   end
 
-  describe "when updating a boolean field to false" do
+  describe "when updating a string field" do
     before(:each) do
-      Contact.all(:first_name => 'OptOutEr').destroy
+      Contact.all(:last_name => 'Luna').destroy
     end
     it "should update" do
-      contact = Contact.gen(:first_name => 'OptOutEr', :has_opted_out_of_email => true)
+      contact = Contact.gen(:last_name => 'Luna', :phone => '877 241 LUNA')
 
-      contact.update(:has_opted_out_of_email => false)
-      Contact.get(contact.id).has_opted_out_of_email.should be_false
+      contact.update(:phone => '888 867 5309')
+      Contact.get(contact.id).phone.should == '888 867 5309'
     end
   end
 
-  describe "when updating a boolean field to true" do
-    before(:each) do
-      Contact.all(:first_name => 'OptOutEr').destroy
-    end
-    it "should update" do
-      contact = Contact.gen(:first_name => 'OptOutEr', :has_opted_out_of_email => false)
-
-      contact.update(:has_opted_out_of_email => true)
-      Contact.get(contact.id).has_opted_out_of_email.should be_true
-    end
-  end
-
-  describe "filtering on account_id and active" do
+  describe "filtering on account_id and last_name" do
     it 'passes' do
       account = Account.first
-      contact = Contact.create(:first_name => 'Per', :last_name => 'Son', :email => "person@company.com", :account_id => account.id, :active => true)
-      Contact.all(:account_id => account.id, :active => true).should include(contact)
+      contact = Contact.create(:first_name => 'Per', :last_name => 'Son', :email => "person@company.com", :account_id => account.id)
+      contact2 = Contact.create(:first_name => 'Hal', :last_name => 'Son', :email => "hal@company.com", :account_id => account.id)
+      contact3 = Contact.create(:first_name => 'Slim', :last_name => 'Jim', :email => "sj@company.com", :account_id => account.id)
+      all_contacts = Contact.all(:account_id => account.id, :last_name => 'Son')
+      all_contacts.should include(contact)
+      all_contacts.should include(contact2)
+      all_contacts.should_not include(contact3)
     end
   end
+
 end

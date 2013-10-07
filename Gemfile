@@ -11,7 +11,7 @@ group :test do
   gem 'debugger',       :platforms => :ruby_19
 
   gem 'bundler'
-  gem "parsetree19", "~> 0.3"
+
   gem 'dm-sweatshop'
   gem 'dm-sqlite-adapter'
 end
