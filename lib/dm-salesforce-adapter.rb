@@ -11,6 +11,13 @@ class SalesforceAdapter < ::DataMapper::Adapters::AbstractAdapter
   Inflector = ::DataMapper::Inflector
 end
 
+module DataMapper
+  module Adapters    
+    ::DataMapper::Adapters::SalesforceAdapter = SalesforceAdapter
+    self.send(:const_added, :SalesforceAdapter)
+  end  
+end
+
 require 'dm-salesforce-adapter/resource'
 require 'dm-salesforce-adapter/connection'
 require 'dm-salesforce-adapter/connection/errors'
@@ -23,9 +30,6 @@ require 'dm-salesforce-adapter/blank' unless Object.method_defined?(:blank?)
 
 # For convenience (WRT the examples)
 module DataMapper::Salesforce
-    Resource = SalesforceAdapter::Resource
+    Resource = ::DataMapper::Adapters::SalesforceAdapter::Resource
 end
 
-::DataMapper::Adapters::SalesforceAdapter = SalesforceAdapter
-::DataMapper::Adapters.send(:const_added, :SalesforceAdapter)
-#::DataMapper::Adapters.const_added(:SalesforceAdapter)
